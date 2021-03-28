@@ -1,6 +1,6 @@
 ﻿namespace calcularPjClt
 {
-    public class CalculoIRFF : CalculoImpostos
+    public class CalculoIRFF : ImpostoBase
     {
         public CalculoIRFF(decimal FaixaSalarial, decimal vlInss)
         {

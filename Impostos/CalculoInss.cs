@@ -1,6 +1,6 @@
 namespace calcularPjClt
 {
-    public class CalculoInss : CalculoImpostos
+    public class CalculoInss : ImpostoBase
     {
         public CalculoInss(decimal faixaSalarial)
         {

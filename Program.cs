@@ -1,4 +1,5 @@
-﻿using System;
+﻿using calcularPjClt.PJ;
+using System;
 using System.Collections.Generic;
 
 namespace calcularPjClt
@@ -15,7 +16,7 @@ namespace calcularPjClt
 
             Console.WriteLine($"Salario bruto: {clt.SalarioCLT}");
             Console.WriteLine("---------------------------------");
-            Console.WriteLine("---------- Beneficios -----------");
+            Console.WriteLine("---------- Beneficios -----------"); 
             Console.WriteLine("---------------------------------");
 
             foreach (var item in beneficios)
@@ -28,7 +29,16 @@ namespace calcularPjClt
             Console.WriteLine($"INSS: {clt.ValorCobrancaInss:c}");
             Console.WriteLine($"IRRF: {clt.ValorCobrancaIrff:c}");
 
-            Console.WriteLine($"Percentual Imposto SN: {clt.PercentualImposto}");
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine("--------------- PJ --------------");
+            Console.WriteLine("---------------------------------");
+            
+            CalcularValoresPJ pJ = new(2600M);
+
+            Console.WriteLine($"Percentual Imposto SN: {pJ.Aliquota}");
+            Console.WriteLine($"Receita Anual: {pJ.ReceitaBruta:c}");
+            Console.WriteLine($"Parcela deducao: {pJ.ParcelaDeducao:c}");
+            Console.WriteLine($"Remuneacao Efetiva: {pJ.RemuneacaoEfetiva:c}");
 
         }
     }
