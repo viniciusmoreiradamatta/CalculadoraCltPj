@@ -17,12 +17,12 @@
         {
             get
             {
-                var aliquota = Calcular();
-                return (ReceitaBruta/ 100) * aliquota;
+                var aliquota = CalcularValoraliquotaEfetiva();
+                return (SalarioMensal / 100) * aliquota;
             }
         }
 
-        public decimal Calcular() =>
+        public decimal CalcularValoraliquotaEfetiva() =>
             ((ReceitaBruta * Aliquota) - ParcelaDeducao) / ReceitaBruta;
 
         public void DefinirAliquota()
