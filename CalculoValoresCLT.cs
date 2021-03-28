@@ -46,13 +46,14 @@ namespace calcularPjClt
             var vlFerias = (SalarioCLT / 12);
 
             Beneficios.Add(new(vlFerias, "Ferias"));
+
             Beneficios.Add(new(vlFerias, "Décimo Terceiro Salário"));
 
             return vlFerias;
         }
 
         public decimal CalcularUmTercoFerias() =>
-            Math.Round((CalcularValorMensalFeriasDecimoTerceiro() / 3), 2);
+            (CalcularValorMensalFeriasDecimoTerceiro() / 3);
 
         public void CalcularValorTotalRendimentoCLT()
         {
@@ -65,6 +66,7 @@ namespace calcularPjClt
             var vlTotalBeneficios = Beneficios.Sum(c => c.Valor) + SalarioCLT;
 
             CalcularValorINSS();
+
             CalcularValorIRFF();
 
             vlTotalBeneficios -= (ValorCobrancaInss + ValorCobrancaIrff);
