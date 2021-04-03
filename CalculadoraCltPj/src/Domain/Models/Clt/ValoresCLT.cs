@@ -1,11 +1,17 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace Domain.Models.Clt
 {
     public class ValoresCLT
     {
+        private ValoresCLT()
+        {
+        }
+
         public ValoresCLT(decimal salarioCLT, List<Beneficio> beneficios)
         {
             Validar(salarioCLT);
@@ -14,13 +20,36 @@ namespace Domain.Models.Clt
             _Beneficios = beneficios;
         }
 
+        [DisplayName("Salario")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
         public decimal SalarioCLT { get; private set; }
+
+        [DisplayName("% INSS")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N0}")]
         public decimal AliquotaInss { get; private set; }
+
+        [DisplayName("INSS")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
         public decimal ValorCobrancaInss { get; private set; }
+
+        [DisplayName("% IRFF")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N0}")]
         public decimal AliquotaIrff { get; private set; }
+
+        [DisplayName("IRFF")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
         public decimal ValorCobrancaIrff { get; private set; }
+
+        [DisplayName("FGTS")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
         public decimal ValorFGTS { get => CalcularValorFGTS(); }
+
+        [DisplayName("ProprcionalDecimo Terceiro/Ferias")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
         public decimal ProporcionalFeriasDecimoTerceiro { get => CalcularUmTercoFerias(); }
+
+        [DisplayName("Decimo Terceiro/Ferias")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
         public decimal FeriasDecimoTerceiro { get => CalcularValorMensalFeriasDecimoTerceiro(); }
 
         private List<Beneficio> _Beneficios { get; set; }
@@ -51,7 +80,7 @@ namespace Domain.Models.Clt
 
         public void Validar(decimal salario)
         {
-            if (salario >= 0)
+            if (salario <= 0)
                 throw new InvalidOperationException("O salario nao pode ser menor ou igual a zero!");
         }
     }

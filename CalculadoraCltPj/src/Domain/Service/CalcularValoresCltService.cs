@@ -3,7 +3,7 @@ using Domain.Models.Impostos;
 
 namespace Domain.Service
 {
-    public class CalcularValoresCltService
+    public class CalcularValoresCltService : ICalcularValoresCltService
     {
         public void Calcular(ValoresCLT valores)
         {
@@ -20,13 +20,13 @@ namespace Domain.Service
 
             valores.AdicionarBeneficio(new(tercoFerias, "1/3 Férias: "));
 
+            CalcularValorMensalFeriasDecimoTerceiro(valores);
+
             var vlTotalBeneficios = valores.ValorTotalBeneficios();
 
             CalcularValorINSS(valores);
 
             CalcularValorIRFF(valores);
-
-            CalcularValorMensalFeriasDecimoTerceiro(valores);
 
             vlTotalBeneficios -= (valores.ValorCobrancaInss + valores.ValorCobrancaIrff);
 
