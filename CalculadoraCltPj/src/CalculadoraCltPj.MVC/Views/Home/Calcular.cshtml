@@ -10,52 +10,58 @@
     <h4>Valores CLT</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-3">
+        <dt class="col-sm-8">
+            @Html.DisplayNameFor(model => model.SalarioTotal)
+        </dt>
+        <dd class="col-sm-4">
+            @Html.DisplayFor(model => model.SalarioTotal)
+        </dd>
+        <dt class="col-sm-8">
             @Html.DisplayNameFor(model => model.SalarioCLT)
         </dt>
-        <dd class="col-sm-9">
+        <dd class="col-sm-4">
             @Html.DisplayFor(model => model.SalarioCLT)
         </dd>
-        <dt class="col-sm-3">
+        <dt class="col-sm-8">
             @Html.DisplayNameFor(model => model.AliquotaInss)
         </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.AliquotaInss,"N:2")
+        <dd class="col-sm-4">
+            @Html.DisplayFor(model => model.AliquotaInss, "N:2")
         </dd>
-        <dt class="col-sm-3">
+        <dt class="col-sm-8">
             @Html.DisplayNameFor(model => model.ValorCobrancaInss)
         </dt>
-        <dd class="col-sm-9">
+        <dd class="col-sm-4">
             @Html.DisplayFor(model => model.ValorCobrancaInss)
         </dd>
-        <dt class="col-sm-3">
+        <dt class="col-sm-8">
             @Html.DisplayNameFor(model => model.AliquotaIrff)
         </dt>
-        <dd class="col-sm-9">
+        <dd class="col-sm-4">
             @Html.DisplayFor(model => model.AliquotaIrff)
         </dd>
-        <dt class="col-sm-3">
+        <dt class="col-sm-8">
             @Html.DisplayNameFor(model => model.ValorCobrancaIrff)
         </dt>
-        <dd class="col-sm-9">
+        <dd class="col-sm-4">
             @Html.DisplayFor(model => model.ValorCobrancaIrff)
         </dd>
-        <dt class="col-sm-3">
+        <dt class="col-sm-8">
             @Html.DisplayNameFor(model => model.ValorFGTS)
         </dt>
-        <dd class="col-sm-9">
+        <dd class="col-sm-4">
             @Html.DisplayFor(model => model.ValorFGTS)
         </dd>
-        <dt class="col-sm-3">
+        <dt class="col-sm-8">
             @Html.DisplayNameFor(model => model.ProporcionalFeriasDecimoTerceiro)
         </dt>
-        <dd class="col-sm-9">
+        <dd class="col-sm-4">
             @Html.DisplayFor(model => model.ProporcionalFeriasDecimoTerceiro)
         </dd>
-        <dt class="col-sm-3">
+        <dt class="col-sm-8">
             @Html.DisplayNameFor(model => model.FeriasDecimoTerceiro)
         </dt>
-        <dd class="col-sm-9">
+        <dd class="col-sm-4">
             @Html.DisplayFor(model => model.FeriasDecimoTerceiro)
         </dd>
     </dl>
@@ -66,12 +72,15 @@
 
     @foreach (var beneficio in Model.Beneficios)
     {
-        <dt class="col-sm-3">
+        <dt class="col-sm-8">
             @Html.DisplayFor(model => beneficio.Nome)
         </dt>
-        <dd class="col-sm-9">
+        <dd class="col-sm-4">
             @Html.DisplayFor(model => beneficio.Valor)
         </dd>
     }
 
 </dl>
+<div class="d-flex flex-row-reverse bd-highlight col-sm-12">
+    <button id="btnLimpar" class="btn btn-outline-dark">Limpar</button>
+</div>

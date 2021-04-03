@@ -2,6 +2,10 @@
     ViewData["Title"] = "Calculo Clt vs Pj";
 }
 
+<div id="msg" class="alert alert-danger" role="alert">
+
+</div>
+
 <div class="container">
     <div class="row">
         <div class="col-12">
@@ -25,13 +29,6 @@
                     </div>
 
                 </div>
-                @*<div class="row col-sm-12">
-                        <div class="col-sm-2">
-                            <div id="btnAdicionarBeneficio" class="btn btn-primary">
-                                +
-                            </div>
-                        </div>
-                    </div>*@
                 <div id="divBeneficios" class="row col-sm-12">
                 </div>
                 <div class="col-sm-12 form-group mt-3">
@@ -41,135 +38,134 @@
             <div id="result"></div>
         </div>
     </div>
-    @section Scripts{
-        <script>
-            $(document).ready(function () {
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
 
+            $('#msg').hide();
 
-                $('#btnAdicionarBeneficio').on('click', () => AdicionarMaisBeneficios());
+            $('#btnAdicionarBeneficio').on('click', () => AdicionarMaisBeneficios());
 
-                $('#btnCalcular').on('click', async () => await CalcularValores());
+            $('#btnCalcular').on('click', async () => await CalcularValores());
 
-                HabilitarMascaraValor();
-                function HabilitarEventoExcluir() {
-                    $('.remover').off().on('click', (e) => {
-                        let id = e.currentTarget.dataset.id;
+            HabilitarMascaraValor();
+            function HabilitarEventoExcluir() {
+                $('.remover').off().on('click', (e) => {
+                    let id = e.currentTarget.dataset.id;
 
-                        $(`.${id}`).remove();
-                    });
-                }
-
-                function AdicionarMaisBeneficios() {
-                    let guid = CreateGuid();
-
-                    let textoBase = `        <div  class="col-sm-7 ${guid}">
-                                                                    <div class="form-group ">
-                                                                        <input class="form-control valid" data-guid="${guid}" name="name" id="name_${guid}" type="text">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-3 ${guid}">
-                                                                    <div class="form-group">
-                                                                        <input class="form-control valid valor" data-guid="${guid}" name="valor" id="valor_${guid}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-1 ${guid}">
-                                                                    <div id="btnRemover" data-id="${guid}" class="btn btn-danger remover">
-                                                                        -
-                                                                    </div>
-                                                                </div>`;
-
-                    $('#divBeneficios').append(textoBase);
-
-                    HabilitarMascaraValor();
-                    HabilitarEventoExcluir();
-                }
-
-                function HabilitarMascaraValor() {
-                    $('.valor').mask('#.##0,00', { reverse: true });
-                }
-
-                async function CalcularValores() {
-                    let SalarioCLT = $('#salario').val().replace('.', '').replace(',', '.');
-
-                    let Beneficios = MontarListaBeneficios();
-
-                    let valoresCLT = { SalarioCLT, Beneficios };
-                    debugger
-                    let result = await RequestAjax('/home/Calcular', JSON.stringify(valoresCLT), 'POST')
-
-                    //await $.ajax({
-                    //    url: '/home/Calcular',
-                    //    data: JSON.stringify(valoresCLT),
-                    //    contentType: "application/json; charset=utf-8",
-                    //    dataType: "json",
-                    //    method: 'POST',
-                    //    async: true
-                    //}).done(function (data) {
-
-                    //    result = data;
-                    //});
-                    debugger
-                    $('#result').html(result);
-                }
-
-                function MontarListaBeneficios() {
-                    let ids = $('[data-guid]');
-
-                    let arr = []
-                    $.each(ids, (i, item) => {
-                        arr.push(item.dataset.guid)
-                    });
-
-                    let uniques = arr.filter(onlyUnique);
-
-                    let listaBeneficios = []
-
-                    $.each(uniques, (i, item) => {
-                        debugger
-                        let Nome = $(`#name_${item}`).val();
-                        let id = `#valor_${item}`;
-                        let Valor = $(id).val().replace('.', '').replace(',', '.');
-                        if (Nome != '' && Valor != '') {
-                            let beneficio = { Nome, Valor };
-
-                            listaBeneficios.push(beneficio)
-                        }
-                    });
-
-                    return listaBeneficios;
-                }
-
-                function onlyUnique(value, index, self) {
-                    return self.indexOf(value) === index;
-                }
-
-                function CreateGuid() {
-                    function _p8(s) {
-                        var p = (Math.random().toString(16) + "000000000").substr(2, 8);
-                        return s ? "-" + p.substr(0, 4) + "-" + p.substr(4, 4) : p;
-                    }
-                    return _p8() + _p8(true) + _p8(true) + _p8();
-                }
-            });
-
-            async function RequestAjax(url, params, metodo) {
-                metodo = metodo == undefined || metodo == "" ? "GET" : metodo;
-
-                let result;
-
-                await $.ajax({
-                    url: url,
-                    data: params,
-                    contentType: "application/json; charset=utf-8",
-                    method: metodo,
-                    async: true
-                }).done(async function (data) {
-                    result = data;
+                    $(`.${id}`).remove();
                 });
-
-                return result;
             }
 
+            function AdicionarMaisBeneficios() {
+                let guid = CreateGuid();
 
-        </script>
-    }
+                let textoBase = `<div  class="col-sm-7 ${guid}">
+                                           <div class="form-group ">
+                                               <input class="form-control valid" data-guid="${guid}" name="name" id="name_${guid}" type="text">
+                                           </div>
+                                       </div>
+                                       <div class="col-sm-3 ${guid}">
+                                           <div class="form-group">
+                                               <input class="form-control valid valor" data-guid="${guid}" name="valor" id="valor_${guid}">
+                                           </div>
+                                       </div>
+                                       <div class="col-sm-1 ${guid}">
+                                           <div id="btnRemover" data-id="${guid}" class="btn btn-danger remover">
+                                               -
+                                           </div>
+                                       </div>`;
+
+                $('#divBeneficios').append(textoBase);
+
+                HabilitarMascaraValor();
+                HabilitarEventoExcluir();
+            }
+
+            function HabilitarMascaraValor() {
+                $('.valor').mask('#.##0,00', { reverse: true });
+            }
+
+            async function CalcularValores() {
+                let SalarioCLT = $('#salario').val().replace('.', '').replace(',', '.');
+                $('#msg').hide();
+                $('#salario').removeClass   ('is-invalid');
+
+                if (SalarioCLT == '') {
+                    $('#msg').html('Informe o salario antes!');
+                    $('#msg').show();
+                    $('#salario').addClass('is-invalid');
+                    return false;
+                }
+
+                let Beneficios = MontarListaBeneficios();
+
+                let valoresCLT = { SalarioCLT, Beneficios };
+
+                let result = await RequestAjax('/home/Calcular', JSON.stringify(valoresCLT), 'POST')
+
+                $('#result').html(result);
+
+                $('#btnLimpar').on('click', () => window.location.href = '/');
+            }
+
+            function MontarListaBeneficios() {
+                let ids = $('[data-guid]');
+
+                let arr = []
+                $.each(ids, (i, item) => {
+                    arr.push(item.dataset.guid)
+                });
+
+                let uniques = arr.filter(onlyUnique);
+
+                let listaBeneficios = []
+
+                $.each(uniques, (i, item) => {
+
+                    let Nome = $(`#name_${item}`).val();
+                    let id = `#valor_${item}`;
+                    let Valor = $(id).val().replace('.', '').replace(',', '.');
+                    if (Nome != '' && Valor != '') {
+                        let beneficio = { Nome, Valor };
+
+                        listaBeneficios.push(beneficio)
+                    }
+                });
+
+                return listaBeneficios;
+            }
+
+            function onlyUnique(value, index, self) {
+                return self.indexOf(value) === index;
+            }
+
+            function CreateGuid() {
+                function _p8(s) {
+                    var p = (Math.random().toString(16) + "000000000").substr(2, 8);
+                    return s ? "-" + p.substr(0, 4) + "-" + p.substr(4, 4) : p;
+                }
+                return _p8() + _p8(true) + _p8(true) + _p8();
+            }
+        });
+
+        async function RequestAjax(url, params, metodo) {
+            metodo = metodo == undefined || metodo == "" ? "GET" : metodo;
+
+            let result;
+
+            await $.ajax({
+                url: url,
+                data: params,
+                contentType: "application/json; charset=utf-8",
+                method: metodo,
+                async: true
+            }).done(async function (data) {
+                result = data;
+            });
+
+            return result;
+        }
+    </script>
+}

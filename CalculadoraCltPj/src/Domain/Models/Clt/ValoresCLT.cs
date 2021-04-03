@@ -24,7 +24,11 @@ namespace Domain.Models.Clt
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
         public decimal SalarioCLT { get; private set; }
 
-        [DisplayName("% INSS")]
+        [DisplayName("Remuneração líquida efetiva")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
+        public decimal SalarioTotal { get; private set; }
+
+        [DisplayName("INSS(%)")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N0}")]
         public decimal AliquotaInss { get; private set; }
 
@@ -32,7 +36,7 @@ namespace Domain.Models.Clt
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
         public decimal ValorCobrancaInss { get; private set; }
 
-        [DisplayName("% IRFF")]
+        [DisplayName("IRFF(%)")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N0}")]
         public decimal AliquotaIrff { get; private set; }
 
@@ -65,6 +69,9 @@ namespace Domain.Models.Clt
         private decimal CalcularValorMensalFeriasDecimoTerceiro() => (SalarioCLT / 12);
 
         public decimal CalcularUmTercoFerias() => (FeriasDecimoTerceiro / 3);
+
+        public void SomarSalarioLiquido() =>
+            SalarioTotal = _Beneficios.Sum(c => c.Valor) - (ValorCobrancaInss + ValorCobrancaIrff) + SalarioCLT;
 
         public void DefinirValoresIrff(decimal aliquotaImposto, decimal valorCobranca)
         {
